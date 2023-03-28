@@ -1,5 +1,6 @@
 import 'package:crud/signup.dart';
 import 'package:crud/welcome.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -42,6 +43,8 @@ class _mainbodycontState extends State<mainbodycont> {
   String? email;
 
   String? pass;
+
+  bool passw=true;
 
   @override
   Widget build(BuildContext context) {
@@ -121,11 +124,23 @@ class _mainbodycontState extends State<mainbodycont> {
                     height: 10,
                   ),
                   TextField(
+                    obscureText: passw,
                     onChanged: (value) {
                       pass = value;
                     },
                     keyboardType: TextInputType.visiblePassword,
                     decoration: InputDecoration(
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            if (passw == true) {
+                              passw = false;
+                            } else {
+                              passw = true;
+                            }
+                            setState(() {});
+                          },
+                          child: Icon(CupertinoIcons.eye_fill),
+                        ),
                         border: OutlineInputBorder(
                           borderSide: BorderSide(
                             width: 3,

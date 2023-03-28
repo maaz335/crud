@@ -1,9 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crud/welcome.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:collection';
+import 'dart:io';
 
-class addproducts extends StatelessWidget {
+class addproducts extends StatefulWidget {
   const addproducts({Key? key}) : super(key: key);
 
+  @override
+  State<addproducts> createState() => _addproductsState();
+}
+
+class _addproductsState extends State<addproducts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -12,8 +21,23 @@ class addproducts extends StatelessWidget {
   }
 }
 
-class addproductsbody extends StatelessWidget {
-  const addproductsbody({Key? key}) : super(key: key);
+class addproductsbody extends StatefulWidget {
+
+
+  @override
+  State<addproductsbody> createState() => _addproductsbodyState();
+}
+
+class _addproductsbodyState extends State<addproductsbody> {
+  String? name;
+  String? descp;
+  String? avail;
+  int? time;
+  void getcurrenttime() {
+    time = DateTime.now().microsecondsSinceEpoch;
+    setState(() {});
+  }
+  final auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +98,9 @@ class addproductsbody extends StatelessWidget {
                     ),
                   ),
                   TextField(
+                    onChanged: (value){
+                      name=value;
+                    },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -87,6 +114,9 @@ class addproductsbody extends StatelessWidget {
                     height: 10,
                   ),
                   TextField(
+                    onChanged: (value){
+                      descp=value;
+                    },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -100,6 +130,9 @@ class addproductsbody extends StatelessWidget {
                     height: 10,
                   ),
                   TextField(
+                    onChanged: (value){
+                      avail=value;
+                    },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
@@ -115,13 +148,42 @@ class addproductsbody extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async{try {
+                        final user = await FirebaseFirestore.instance;
+                        HashMap<String, String> map =
+                        HashMap<String, String>();
+                        map["Name"] = name!;
+                        map["Description"] = descp!;
+                        map["Availability"] = avail!;
+                        map["PID"] = time.toString();
+                        await user
+                            .collection("Products")
+                            .doc(time.toString())
+                            .set(map);
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => welcome(),
                           ),
                         );
+                      }catch(e){
+                        showDialog<void>(
+                            context: context,
+                            barrierDismissible:
+                            false, // user must tap button!
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text('Warning'),
+                                content: SingleChildScrollView(
+                                  child: ListBody(
+                                    children: <Widget>[
+                                      Text(e.toString()),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
+                      }
                       },
                       child: Text('Add Product'),
                     ),
