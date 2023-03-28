@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "23670100359",
+    "project_id": "login-cfbbd",
+    "storage_bucket": "login-cfbbd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23670100359:android:e558724e8889fecafb4322",
+        "android_client_info": {
+          "package_name": "com.MaazAhmad.LoginPage.login_page"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23670100359-koeqaibpikbmvchm8j73nim86so5aqom.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOrQvx0bHAiKUZleflYasYHW-ly2kyAB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23670100359-koeqaibpikbmvchm8j73nim86so5aqom.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:23670100359:android:1bc277c8037e330cfb4322",
+        "android_client_info": {
+          "package_name": "com.maazAhmad.crud"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "23670100359-koeqaibpikbmvchm8j73nim86so5aqom.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOrQvx0bHAiKUZleflYasYHW-ly2kyAB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "23670100359-koeqaibpikbmvchm8j73nim86so5aqom.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
