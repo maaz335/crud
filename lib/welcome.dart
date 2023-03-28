@@ -41,12 +41,14 @@ class _welcomebodyState extends State<welcomebody> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ListView.builder(
-          itemCount: _products.length,
-          itemBuilder: (context, index) {
-            return productsgetter(_products[index] as Product);
-          }),
+    return Scaffold(
+      body: SafeArea(
+        child: ListView.builder(
+            itemCount: _products.length,
+            itemBuilder: (context, index) {
+              return productsgetter(_products[index] as Product);
+            }),
+      ),
     );
   }
 

@@ -17,8 +17,11 @@ class _productsgetterState extends State<productsgetter> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 1.0,
-      width: MediaQuery.of(context).size.width * 1.0,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(),
+        ),
+      ),
       child: ListTile(
         title: Text("Name: ${widget._product.Name}"),
         subtitle: Text(
@@ -50,7 +53,7 @@ class _productsgetterState extends State<productsgetter> {
             IconButton(
               onPressed: () {},
               icon: Icon(
-                Icons.monetization_on,
+                Icons.edit,
                 color: Colors.greenAccent,
               ),
             ),
