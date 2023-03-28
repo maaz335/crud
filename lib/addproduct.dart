@@ -22,8 +22,6 @@ class _addproductsState extends State<addproducts> {
 }
 
 class addproductsbody extends StatefulWidget {
-
-
   @override
   State<addproductsbody> createState() => _addproductsbodyState();
 }
@@ -37,6 +35,7 @@ class _addproductsbodyState extends State<addproductsbody> {
     time = DateTime.now().microsecondsSinceEpoch;
     setState(() {});
   }
+
   final auth = FirebaseAuth.instance;
 
   @override
@@ -98,8 +97,8 @@ class _addproductsbodyState extends State<addproductsbody> {
                     ),
                   ),
                   TextField(
-                    onChanged: (value){
-                      name=value;
+                    onChanged: (value) {
+                      name = value;
                     },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -114,8 +113,8 @@ class _addproductsbodyState extends State<addproductsbody> {
                     height: 10,
                   ),
                   TextField(
-                    onChanged: (value){
-                      descp=value;
+                    onChanged: (value) {
+                      descp = value;
                     },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -130,8 +129,8 @@ class _addproductsbodyState extends State<addproductsbody> {
                     height: 10,
                   ),
                   TextField(
-                    onChanged: (value){
-                      avail=value;
+                    onChanged: (value) {
+                      avail = value;
                     },
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
@@ -148,42 +147,98 @@ class _addproductsbodyState extends State<addproductsbody> {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: ElevatedButton(
-                      onPressed: () async{try {
-                        final user = await FirebaseFirestore.instance;
-                        HashMap<String, String> map =
-                        HashMap<String, String>();
-                        map["Name"] = name!;
-                        map["Description"] = descp!;
-                        map["Availability"] = avail!;
-                        map["PID"] = time.toString();
-                        await user
-                            .collection("Products")
-                            .doc(time.toString())
-                            .set(map);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => welcome(),
-                          ),
-                        );
-                      }catch(e){
-                        showDialog<void>(
-                            context: context,
-                            barrierDismissible:
-                            false, // user must tap button!
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title: const Text('Warning'),
-                                content: SingleChildScrollView(
-                                  child: ListBody(
-                                    children: <Widget>[
-                                      Text(e.toString()),
-                                    ],
+                      onPressed: () async {
+                        try {
+                          if (name == null) {
+                            showDialog<void>(
+                                context: context,
+                                barrierDismissible:
+                                    false, // user must tap button!
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Note'),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: const <Widget>[
+                                          Text('Enter Name of product !'),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                          } else if (descp == null) {
+                            showDialog<void>(
+                                context: context,
+                                barrierDismissible:
+                                    false, // user must tap button!
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Note'),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: const <Widget>[
+                                          Text('Enter Desciption of product !'),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                          } else if (avail == null) {
+                            showDialog<void>(
+                                context: context,
+                                barrierDismissible:
+                                    false, // user must tap button!
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: const Text('Note'),
+                                    content: SingleChildScrollView(
+                                      child: ListBody(
+                                        children: const <Widget>[
+                                          Text(
+                                              'Enter Availability of product !'),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                });
+                          } else {
+                            final user = await FirebaseFirestore.instance;
+                            HashMap<String, String> map =
+                                HashMap<String, String>();
+                            map["Name"] = name!;
+                            map["Description"] = descp!;
+                            map["Availability"] = avail!;
+                            map["UID"] = auth.currentUser!.uid;
+                            map["PID"] = time.toString();
+                            await user
+                                .collection("Products")
+                                .doc(time.toString())
+                                .set(map);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => welcome(),
+                              ),
+                            );
+                          }
+                        } catch (e) {
+                          showDialog<void>(
+                              context: context,
+                              barrierDismissible:
+                                  false, // user must tap button!
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: const Text('Warning'),
+                                  content: SingleChildScrollView(
+                                    child: ListBody(
+                                      children: <Widget>[
+                                        Text(e.toString()),
+                                      ],
+                                    ),
                                   ),
-                                ),
-                              );
-                            });
-                      }
+                                );
+                              });
+                        }
                       },
                       child: Text('Add Product'),
                     ),

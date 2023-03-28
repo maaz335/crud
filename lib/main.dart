@@ -44,7 +44,32 @@ class _mainbodycontState extends State<mainbodycont> {
 
   String? pass;
 
-  bool passw=true;
+  bool passw = true;
+
+  final Auth = FirebaseAuth.instance;
+
+  void getCurrentUser() async {
+    try {
+      final user = await Auth.currentUser;
+      if (user != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => welcome(),
+          ),
+        );
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentUser();
+  }
 
   @override
   Widget build(BuildContext context) {
